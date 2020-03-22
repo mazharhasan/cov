@@ -9,7 +9,7 @@ let highrisks = new Schema({
         type: String
     },
     choices: {
-        type: String
+        type: Array
     }
 });
 module.exports = mongoose.model('highrisks', highrisks);
