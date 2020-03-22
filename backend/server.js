@@ -7,6 +7,7 @@ const port = 5000;
 const highRiskRoute = require('./routes/api/highrisk');
 const userRoute = require('./routes/api/users');
 const riskAssesmentRoute = require('./routes/api/riskassesments');
+var path    = require("path");
 
 const app = express();
 //app.use(express.json());
@@ -26,6 +27,11 @@ connection.once('open', function () {
 app.use('/api/highrisk', highRiskRoute);
 app.use('/api/users', userRoute);
 app.use('/api/riskassesments', riskAssesmentRoute);
+
+
+app.get('/',function(req,res){
+    res.sendFile(path.join(__dirname+'/index.html'));
+  });
 
 app.listen(port, function () {
     console.log("Server is running on Port: " + port);
