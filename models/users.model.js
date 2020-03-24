@@ -1,28 +1,28 @@
-﻿const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+﻿async function findUser(db,email) {
+    return db.collection('users').find({'email':email}).toArray();
+    }
 
-let Users = new Schema(
-    {
-        firstname: {
-            type: String
-        },
-        lastname: {
-            String
-        },
-        city: {
-            type: String
-        },
-        age: {
-            type: Number
-        },email: {
-            type: String
-        },
-        longitude: {
-            type: String
-        },
-        latitude: {
-            type: String
-        }
-    });
+  async function findAllUsers(db) {
+   return db.collection('users').find().toArray();
+  }
 
-module.exports = mongoose.model('Users', Users);
+  async function saveUser(db, user) {
+        db.collection('users').insertOne(user,function(err, user) 
+        { return user.insertedId;}
+        )
+  }
+  async function findUserByObjectId(db, userId) {
+    return  db.collection('users').find(({'_id': userId}));
+  }
+
+  async function deleteFormData(db, userId) {
+    db.collection('users').deleteOne({ id: userId });
+  }
+
+  module.exports = {
+    findUser,
+    findAllUsers,
+    deleteFormData,
+    saveUser,
+  };
+  
