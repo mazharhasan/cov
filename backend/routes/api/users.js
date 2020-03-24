@@ -16,16 +16,14 @@ userRouter.route('/').get(function (req, response) {
 
 
 userRouter.route('/add').post(function (req, res) {
-    let todo = new User(req.body);
-    todo.save()
-        .then(todo => {
+    let user = new User(req.body);
+    user.save()
+        .then(user => {
             res.status(200).json({ 'user': 'user added successfully' });
         })
         .catch(err => {
             res.status(400).send('adding new user failed');
         });
 });
-
-
 
 module.exports = userRouter;

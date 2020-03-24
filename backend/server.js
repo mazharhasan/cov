@@ -7,6 +7,9 @@ const port = 5000;
 const highRiskRoute = require('./routes/api/highrisk');
 const userRoute = require('./routes/api/users');
 const riskAssesmentRoute = require('./routes/api/riskassesments');
+const questionsRoute = require('./routes/api/questions');
+const { MongoClient } = require('mongodb');
+
 var path    = require("path");
 
 const app = express();
@@ -23,19 +26,43 @@ connection.once('open', function () {
     console.log("MongoDB database connection established successfully");
 });
 
-// Use Routes
-app.use('/api/highrisk', highRiskRoute);
+const PORT = process.env.PORT || 5000;
+const dev = process.env.NODE_DEV !== 'production'; // true false
+
+const MONGO_URL = 'mongodb+srv://dbusr:Covid19@covidtracker.3f18u.azure.mongodb.net/';
+const dbName = 'coviddb';
+
+// Fix crash with react-datepicker
+global.navigator = {
+  userAgent: 'node.js',
+};
+
+MongoClient.connect(MONGO_URL, (err, client) => {
+    console.log('Connected successfully to server', MONGO_URL);
+    const db = client.db(dbName);
+      // express code here
+      const app = express();
+      app.use(bodyParser.json());
+      app.use(bodyParser.urlencoded({ extended: true }));
+  
+      app.use((req, res, next) => {
+        // Also expose the MongoDB database handle so Next.js can access it.
+        req.db = db;
+        next();
+      });
+  
+      app.use('/api/highrisk', highRiskRoute);
 app.use('/api/users', userRoute);
 app.use('/api/riskassesments', riskAssesmentRoute);
-
-
-app.get('/',function(req,res){
-    res.sendFile(path.join(__dirname+'/index.html'));
+app.use('/api/questions', questionsRoute);
+  
+  
+      app.listen(PORT, err1 => {
+        if (err1) throw err1;
+        console.log(`ready at http://localhost:${PORT}`);
+      });
   });
 
-app.listen(port, function () {
-    console.log("Server is running on Port: " + port);
-});
 
 
 

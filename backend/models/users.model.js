@@ -13,8 +13,14 @@ let Users = new Schema(
             type: String
         },
         age: {
-            type: String
+            type: Number
         },email: {
+            type: String
+        },
+        longitude: {
+            type: String
+        },
+        latitude: {
             type: String
         }
     });
