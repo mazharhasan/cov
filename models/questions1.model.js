@@ -15,4 +15,5 @@ const questionModel = mongoose.Schema({
 }, {
         timestamps: true
     });
+	
 module.exports = mongoose.model('Questions', questionModel);
