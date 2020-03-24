@@ -26,7 +26,7 @@ connection.once('open', function () {
     console.log("MongoDB database connection established successfully");
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8081;
 const dev = process.env.NODE_DEV !== 'production'; // true false
 
 const MONGO_URL = 'mongodb+srv://dbusr:Covid19@covidtracker.3f18u.azure.mongodb.net/';
