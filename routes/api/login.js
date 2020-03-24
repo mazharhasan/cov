@@ -13,6 +13,4 @@ loginRoute.route('/').post(async (req, res) => {
         res.status(409).send('user not found')
     }
 })
-
-
 module.exports = loginRoute;

@@ -27,6 +27,4 @@ registerRoute.route('/').post(async (req, res) => {
         res.status(409).send('user already exist')
     }
 })
-
-
 module.exports = registerRoute;
