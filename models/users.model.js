@@ -1,4 +1,4 @@
-﻿async function findUser(db,email) {
+﻿ function findUser(db,email) {
     return db.collection('users').find({'email':email}).toArray();
     }
 
@@ -6,13 +6,13 @@
    return db.collection('users').find().toArray();
   }
 
-  async function saveUser(db, user) {
+   function saveUser(db, user) {
         // db.collection('users').insertOne(user,function(err, user) 
         // { return user.insertedId;}
         // )
         db.collection("users").insertOne( user, function( err, ret) {
-          console.log( ret );
-          return ret;
+          //console.log( ret );
+          return ret.insertedId;
        })
   }
   async function findUserByObjectId(db, userId) {

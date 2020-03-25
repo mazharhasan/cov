@@ -15,16 +15,36 @@ registerRoute.route('/').get(async (req, res) => {
 // })
 
 registerRoute.route('/').post(async (req, res) => {
-    var user = await User.findUser(req.db,req.body.email);
-    if(user.length == 0)
-    {
-        var user1 = await User.saveUser(req.db,req.body);
-        console.log('After registeration '+ user1);
-        res.status(201).send('user registered successfully')
-    }
-    else
-    {
-        res.status(409).send('user already exist')
-    }
-})
+
+     var user = User.findUser(req.db,req.body.email)
+     .then(data => {
+         if(data.length == 0)
+         {
+        //   var t = User.saveUser(req.db,req.body);
+        //   console.log('here is the user detail   '+t);
+        //   res.status(201).send(t);
+         // console.log('here are the user detail);
+
+         req.db.collection("users").insertOne(req.body)
+       .then(result => res.status(201).send(`${result.insertedId}`))
+        .catch(err => res.status(409).send(`Failed to insert item: ${err}`))
+         }
+         else
+         {
+            res.status(409).send('user already exist')
+         }
+    });
+    // if(user.length == 0)
+    // {
+    //     var user1 = await User.saveUser(req.db,req.body);
+    //     console.log('After registeration '+ user1);
+    //     res.status(201).send('user registered successfully')
+    // }
+    // else
+    // {
+    //     res.status(409).send('user already exist')
+    // }
+});
+
+
 module.exports = registerRoute;
