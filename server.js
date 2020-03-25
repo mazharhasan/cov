@@ -10,6 +10,8 @@ const riskAssesmentRoute = require('./routes/api/riskassesments');
 const questionsRoute = require('./routes/api/questions');
 const registerRoute = require('./routes/api/register');
 const loginRoute = require('./routes/api/login');
+const responseRoute = require('./routes/api/response');
+
 
 const { MongoClient } = require('mongodb');
 
@@ -60,6 +62,7 @@ app.use('/api/riskassesments', riskAssesmentRoute);
 app.use('/api/questions', questionsRoute);
 app.use('/api/register', registerRoute);
 app.use('/api/login', loginRoute);
+app.use('/api/response', responseRoute);
       app.listen(PORT, err1 => {
         if (err1) throw err1;
         console.log(`ready at http://localhost:${PORT}`);

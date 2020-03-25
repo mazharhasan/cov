@@ -7,9 +7,13 @@
   }
 
   async function saveUser(db, user) {
-        db.collection('users').insertOne(user,function(err, user) 
-        { return user.insertedId;}
-        )
+        // db.collection('users').insertOne(user,function(err, user) 
+        // { return user.insertedId;}
+        // )
+        db.collection("users").insertOne( user, function( err, ret) {
+          console.log( ret );
+          return ret;
+       })
   }
   async function findUserByObjectId(db, userId) {
     return  db.collection('users').find(({'_id': userId}));
